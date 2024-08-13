@@ -10,7 +10,7 @@ type MicPanelProps = {
 
 const MicPanel: React.FC<MicPanelProps> = ({ onMicClick, onBulbClick }) => {
   return (
-    <div className="mt-80">
+    <div className="mt-40">
       <div className="flex flex-row justify-center items-center space-x-24">
         <div className="border rounded-full border-1 border-white p-3 cursor-pointer" onClick={onMicClick}>
           <Image
