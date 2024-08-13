@@ -28,7 +28,7 @@ export default function Home() {
   };
 
   return (
-    <main className="relative flex min-h-screen flex-col items-center justify-between px-24">
+    <main className="relative flex min-h-screen flex-col items-center justify-between lg:px-24 px-8">
       <div className="absolute top-2 left-2 text-white font-extrabold text-5xl">
         WAL-AI
       </div>
@@ -37,10 +37,10 @@ export default function Home() {
           ref={videoRef}
           src="/voice_assistant1.mp4" 
           muted
-          className="cursor-pointer mt-32 size-[300px] rounded-full"
+          className="cursor-pointer mt-24 lg:mt-32 lg:size-[300px] size-[250px] rounded-full"
           loop
           controls={false}
-          onClick={handleVideoClick}
+          // onClick={handleVideoClick}
         />
         <MicPanel handleVideoClick={handleVideoClick} onBulbClick={handleBulbClick} />
       </div>
