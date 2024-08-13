@@ -7,7 +7,6 @@ import SpeechtoText from "@/components/SpeechtoText";
 
 export default function Home() {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const [showSpeechToText, setShowSpeechToText] = useState(false);
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
   const handleVideoClick = () => {
@@ -20,11 +19,6 @@ export default function Home() {
     }
   };
 
-  const handleMicClick = () => {
-    handleVideoClick(); // Handle video click for mic
-    setShowSpeechToText(true); // Show SpeechtoText when mic is clicked
-  };
-
   const handleBulbClick = () => {
     setIsPopupOpen(true); 
   };
@@ -34,13 +28,8 @@ export default function Home() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+    <main className="flex min-h-screen flex-col items-center justify-between px-24">
       <div className="relative grid place-items-center w-fit h-fit rounded-full">           
-        {showSpeechToText && (
-          <div className="absolute top-0 z-10"> 
-            <SpeechtoText />
-          </div>
-        )}
         <video
           ref={videoRef}
           src="/voice_assistant1.mp4" 
@@ -50,7 +39,7 @@ export default function Home() {
           controls={false}
           onClick={handleVideoClick}
         />
-        <MicPanel onMicClick={handleMicClick} onBulbClick={handleBulbClick} />
+        <MicPanel handleVideoClick={handleVideoClick} onBulbClick={handleBulbClick} />
       </div>
       <Popup isOpen={isPopupOpen} onClose={handlePopupClose} />
     </main>

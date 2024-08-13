@@ -1,18 +1,67 @@
 "use client"
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
+import 'regenerator-runtime/runtime';
+import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 
 
 type MicPanelProps = {
-  onMicClick: () => void;
+  handleVideoClick: () => void;
   onBulbClick: () => void;
 };
 
-const MicPanel: React.FC<MicPanelProps> = ({ onMicClick, onBulbClick }) => {
+const MicPanel: React.FC<MicPanelProps> = ({ handleVideoClick, onBulbClick }) => {
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    // This ensures the code is only run on the client side
+    setIsClient(true);
+  }, []);
+
+  const {
+    transcript,
+    listening,
+    browserSupportsSpeechRecognition
+  } = useSpeechRecognition();
+
+  const [showSpeechToText, setShowSpeechToText] = useState(false);
+  const [isListening, setIsListening] = useState(false);
+
+  const handleMicClick = () => {
+    handleVideoClick(); // Handle video click for mic
+    setIsListening(!isListening);
+    console.log("Mic is on: ", isListening)
+    setShowSpeechToText(true); // Show SpeechtoText when mic is clicked
+  };
+
+  useEffect(() => {
+    if (isListening) {
+      SpeechRecognition.startListening({ continuous: true });
+      console.log('Started listening')
+    } else {
+      SpeechRecognition.stopListening();
+      console.log('Stopped listening')
+    }
+  }, [isListening]);
+
+  useEffect(() => {
+    console.log(transcript);
+  },[transcript]);
+
+  if (!isClient) {
+    // Avoid rendering browser-dependent content on the server
+    return null;
+  }
+
+  if (!browserSupportsSpeechRecognition) {
+    return <span>Browser doesn't support speech recognition.</span>;
+  }
+
   return (
     <div className="mt-40">
+      {showSpeechToText && <p>{transcript}</p>}
       <div className="flex flex-row justify-center items-center space-x-24">
-        <div className="border rounded-full border-1 border-white p-3 cursor-pointer" onClick={onMicClick}>
+        <div className="border rounded-full border-1 border-white p-3 cursor-pointer" onClick={handleMicClick}>
           <Image
             src="/microphone.svg"
             alt="microphone"

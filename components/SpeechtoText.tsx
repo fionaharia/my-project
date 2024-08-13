@@ -20,7 +20,7 @@ const SpeechtoText: React.FC = () => {
     return () => {
       SpeechRecognition.stopListening();
     };
-  }, []);
+  });
 
   return (
     <div>
