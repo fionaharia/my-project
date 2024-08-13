@@ -4,6 +4,8 @@ import Image from 'next/image';
 import 'regenerator-runtime/runtime';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import SpeechtoText from './SpeechtoText';
+import Ear from '@/icons/Ear';
+import Mic from '@/icons/Mic';
 
 type MicPanelProps = {
   handleVideoClick: () => void;
@@ -78,18 +80,14 @@ const MicPanel: React.FC<MicPanelProps> = ({ handleVideoClick, onBulbClick }) =>
       {message && <p className="message">{message}</p>}
       <div className="flex flex-row justify-center items-center space-x-24">
         <button
-          className={`flex items-center space-x-2 py-2 px-4 rounded-full border cursor-pointer transition-colors duration-300 
-          ${isListening ? 'bg-white text-black border-black' : 'bg-black text-white border-white'} 
-          hover:${isListening ? 'bg-gray-100' : 'bg-gray-800'}`}
+          className={`text-white flex items-center space-x-2 py-2 px-4 rounded-full cursor-pointer transition-colors duration-300 
+          ${isListening ? ' bg-green-500' : 'bg-[#016dea]'} 
+          hover:${isListening ? 'shadow-[0_0_15px_0_rgba(34,197,94,0.5)]' : 'shadow-[0_0_15px_0_rgba(1,109,234,0.5)]'}`}
           onClick={handleMicClick}
         >
-          <Image
-            src={isListening ? "/ear.svg" : "/microphone.svg"}
-            alt={isListening ? "ear" : "microphone"}
-            width={24}
-            height={24}
-            priority
-          />
+          {isListening ? 
+            <Ear width={24} height={24}/> : <Mic width={24} height={24}/>
+          }
           <span>{isListening ? 'Listening...' : 'Start speaking'}</span>
         </button>
       </div>
