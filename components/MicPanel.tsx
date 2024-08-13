@@ -13,10 +13,7 @@ type MicPanelProps = {
   onBulbClick: () => void;
 };
 
-const MicPanel: React.FC<MicPanelProps> = ({
-  handleVideoClick,
-  onBulbClick,
-}) => {
+const MicPanel = ({ handleVideoClick, onBulbClick} : MicPanelProps) => {
   const [isClient, setIsClient] = useState(false);
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false); // State for loading
@@ -128,10 +125,7 @@ const MicPanel: React.FC<MicPanelProps> = ({
           className={`text-white flex items-center space-x-2 py-2 px-4 rounded-full cursor-pointer transition-colors duration-300 
           ${isListening && !loading ? " bg-green-500" : "bg-[#016dea]"}
           ${loading && "bg-gray-400 hover:shadow-none"} 
-          ${(isListening && !loading)
-              ? "hover:shadow-[0_0_15px_10px_rgba(34,197,94,0.3)]"
-              : "hover:shadow-[0_0_15px_10px_rgba(1,109,234,0.3)]"
-          }`}
+          ${(isListening && !loading) ? "hover:shadow-[0_0_15px_10px_rgba(34,197,94,0.3)]" : "hover:shadow-[0_0_15px_10px_rgba(1,109,234,0.3)]"}`}
           onClick={handleMicClick}
           disabled={loading} // Disable button while loading
         >
@@ -143,11 +137,7 @@ const MicPanel: React.FC<MicPanelProps> = ({
             <Mic width={24} height={24} />
           )}
           <span>
-            {loading
-              ? "Thinking..."
-              : isListening
-              ? "Listening..."
-              : "Start speaking"}
+            {loading ? "Thinking..." : (isListening ? "Listening..." : "Start speaking")}
           </span>
         </button>
       </div>
