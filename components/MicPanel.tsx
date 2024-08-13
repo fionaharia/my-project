@@ -21,6 +21,7 @@ const MicPanel: React.FC<MicPanelProps> = ({ handleVideoClick, onBulbClick }) =>
   const {
     transcript,
     listening,
+    resetTranscript,
     browserSupportsSpeechRecognition
   } = useSpeechRecognition();
 
@@ -30,18 +31,19 @@ const MicPanel: React.FC<MicPanelProps> = ({ handleVideoClick, onBulbClick }) =>
   const handleMicClick = () => {
     handleVideoClick(); // Handle video click for mic
     setIsListening(!isListening);
-    console.log("Mic is on: ", isListening)
-    setShowSpeechToText(true); // Show SpeechtoText when mic is clicked
   };
 
   useEffect(() => {
     if (isListening) {
-      SpeechRecognition.startListening({ continuous: true });
+      setShowSpeechToText(true);
+      SpeechRecognition.startListening({ continuous: true, language: 'en-IN' });
       console.log('Started listening')
     } else {
+      setShowSpeechToText(false);
       SpeechRecognition.stopListening();
       console.log('Stopped listening')
     }
+    resetTranscript();
   }, [isListening]);
 
   useEffect(() => {
