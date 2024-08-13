@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import 'regenerator-runtime/runtime';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
+import SpeechtoText from './SpeechtoText';
 
 type MicPanelProps = {
   handleVideoClick: () => void;
@@ -15,7 +16,8 @@ const MicPanel: React.FC<MicPanelProps> = ({ handleVideoClick, onBulbClick }) =>
   const commands = [
     {
       command: 'Hi, I’m really frustrated. My delivery was supposed to arrive yesterday',
-      callback: () => setMessage('Hello Alex! I’m sorry to hear about the delay. Let me check the status of your delivery immediately')
+      callback: () => setMessage('Hello Alex! I’m sorry to hear about the delay. Let me check the status of your delivery immediately'),
+      isFuzzyMatch: true
     },
   ];
 
@@ -55,6 +57,11 @@ const MicPanel: React.FC<MicPanelProps> = ({ handleVideoClick, onBulbClick }) =>
   useEffect(() => {
     console.log(transcript);
   }, [transcript]);
+
+  useEffect(() => {
+    setShowSpeechToText(false)
+    setIsListening(false)
+  }, [message])
 
   if (!isClient) {
     // Avoid rendering browser-dependent content on the server
