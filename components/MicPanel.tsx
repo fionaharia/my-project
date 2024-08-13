@@ -4,7 +4,6 @@ import Image from 'next/image';
 import 'regenerator-runtime/runtime';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 
-
 type MicPanelProps = {
   handleVideoClick: () => void;
   onBulbClick: () => void;
@@ -48,7 +47,7 @@ const MicPanel: React.FC<MicPanelProps> = ({ handleVideoClick, onBulbClick }) =>
 
   useEffect(() => {
     console.log(transcript);
-  },[transcript]);
+  }, [transcript]);
 
   if (!isClient) {
     // Avoid rendering browser-dependent content on the server
@@ -63,23 +62,21 @@ const MicPanel: React.FC<MicPanelProps> = ({ handleVideoClick, onBulbClick }) =>
     <div className="mt-40">
       {showSpeechToText && <p>{transcript}</p>}
       <div className="flex flex-row justify-center items-center space-x-24">
-        <div className="border rounded-full border-1 border-white p-3 cursor-pointer" onClick={handleMicClick}>
+        <button
+          className={`flex items-center space-x-2 py-2 px-4 rounded-full border cursor-pointer transition-colors duration-300 
+          ${isListening ? 'bg-white text-black border-black' : 'bg-black text-white border-white'} 
+          hover:${isListening ? 'bg-gray-100' : 'bg-gray-800'}`}
+          onClick={handleMicClick}
+        >
           <Image
-            src="/microphone.svg"
-            alt="microphone"
+            src={isListening ? "/ear.svg" : "/microphone.svg"}
+            alt={isListening ? "ear" : "microphone"}
             width={24}
             height={24}
             priority
           />
-        </div>
-        <div className="border rounded-full border-1 border-white p-3 cursor-pointer" onClick={onBulbClick}>
-          <Image
-            src="/bulb.svg"
-            alt="bulb"
-            width={24}
-            height={24}
-          />
-        </div>
+          <span>{isListening ? 'Listening...' : 'Start speaking'}</span>
+        </button>
       </div>
     </div>
   );
