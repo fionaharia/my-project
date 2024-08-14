@@ -29,8 +29,8 @@ export default function Home() {
 
   return (
     <main className="relative flex min-h-screen flex-col items-center justify-between lg:px-24 px-8">
-      <div className="absolute top-2 left-2 text-white font-extrabold text-5xl">
-        WAL-AI
+      <div className="absolute lg:top-2 lg:left-2 lg:translate-x-0 top-4 left-1/2 -translate-x-1/2 text-white font-extrabold text-5xl">
+        WALLY
       </div>
       <div className="relative grid place-items-center w-fit h-fit rounded-full">           
         <video

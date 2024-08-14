@@ -67,7 +67,7 @@ const MicPanel = ({ handleVideoClick, onBulbClick} : MicPanelProps) => {
   const [isListening, setIsListening] = useState(false);
 
   const handleMicClick = () => {
-    handleVideoClick();
+    !message && handleVideoClick();
     setIsListening((prevState) => !prevState);
   };
 
@@ -97,7 +97,7 @@ const MicPanel = ({ handleVideoClick, onBulbClick} : MicPanelProps) => {
         setLoading(false); // Hide loading indicator
         setShowSpeechToText(false); // Hide speech to text
         setIsListening(false); // Reset listening state
-        handleVideoClick();
+        // handleVideoClick();
       }, 1000); // Adjust the delay if needed
 
       return () => clearTimeout(timer);
